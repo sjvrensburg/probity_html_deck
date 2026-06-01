@@ -1,0 +1,402 @@
+/*-- scss:defaults --*/
+
+// Probity palette
+$probity-navy:   #0A325A;
+$probity-deep:   #062340;
+$probity-mid:    #4A7BA8;
+$probity-light:  #8BABCB;
+$probity-pale:   #E8EEF5;
+$probity-off:    #F7F9FC;
+$probity-gold:   #C8881F;
+$probity-body:   #1F2937;
+$probity-muted:  #6B7280;
+$probity-rule:   #D5DEE9;
+
+// Reveal.js theme variables
+$backgroundColor:           #ffffff !default;
+$mainColor:                 $probity-body !default;
+$headingColor:              $probity-navy !default;
+$mainFont:                  "Calibri", "Gill Sans MT", "Trebuchet MS", Arial, sans-serif !default;
+$headingFont:               $mainFont !default;
+$mainFontSize:              26px !default;
+$headingTextShadow:         none !default;
+$headingLetterSpacing:      -0.01em !default;
+$headingTextTransform:      none !default;
+$headingFontWeight:         700 !default;
+$linkColor:                 $probity-mid !default;
+$linkColorHover:            $probity-navy !default;
+$selectionBackgroundColor:  $probity-pale !default;
+$codeFont:                  "Consolas", "Courier New", monospace !default;
+
+/*-- scss:rules --*/
+
+// ── Base ─────────────────────────────────────────────────────────────────────
+
+.reveal .slides section {
+  text-align: left;
+  padding: 0 64px 24px 64px;
+  box-sizing: border-box;
+  height: 100%;
+}
+
+// ── Title slide ───────────────────────────────────────────────────────────────
+
+.reveal .slides section.title-slide {
+  padding: 64px 96px;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 8px;
+    background: $probity-gold;
+  }
+
+  &::after {
+    content: '';
+    position: absolute;
+    bottom: 52px;
+    left: 96px;
+    right: 96px;
+    height: 1px;
+    background: rgba($probity-gold, 0.5);
+  }
+
+  .title {
+    color: #ffffff;
+    font-size: 2.2em;
+    font-weight: 700;
+    line-height: 1.15;
+    margin-bottom: 0.25em;
+    text-align: left;
+  }
+
+  .subtitle {
+    color: $probity-gold;
+    font-size: 1.05em;
+    font-weight: 400;
+    margin-bottom: 0.6em;
+    text-align: left;
+  }
+
+  .quarto-title-affiliation,
+  .author,
+  p.author {
+    color: rgba(255, 255, 255, 0.82);
+    font-size: 0.82em;
+    margin-top: 0.25em;
+    text-align: left;
+  }
+
+  .date,
+  p.date {
+    color: rgba(255, 255, 255, 0.55);
+    font-size: 0.78em;
+    margin-top: 0.15em;
+    text-align: left;
+  }
+}
+
+// ── Section divider slides (level-1, navy background) ────────────────────────
+
+.reveal .slides section[data-background-color="#0A325A"]:not(.title-slide) {
+  padding: 64px 96px;
+  display: flex !important;
+  flex-direction: column;
+  justify-content: center;
+
+  &::before {
+    content: '';
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 0;
+    width: 8px;
+    background: $probity-gold;
+  }
+
+  h1, h2, h3 {
+    color: #ffffff;
+    font-size: 2em;
+    font-weight: 700;
+    text-align: left;
+    margin: 0;
+  }
+}
+
+// ── Content slides (level-2, white background) ────────────────────────────────
+
+.reveal .slides section.level2 {
+  padding-top: 20px;
+
+  &::before {
+    content: '';
+    position: absolute;
+    top: 64px;
+    left: 0;
+    right: 0;
+    height: 1px;
+    background: $probity-rule;
+  }
+
+  h2 {
+    color: $probity-navy;
+    font-size: 1.25em;
+    font-weight: 700;
+    margin-top: 56px;
+    margin-bottom: 0.5em;
+    text-align: left;
+    line-height: 1.2;
+  }
+}
+
+// ── Logo ──────────────────────────────────────────────────────────────────────
+
+.slide-logo {
+  position: fixed !important;
+  top: 14px !important;
+  left: 20px !important;
+  height: 34px !important;
+  width: auto !important;
+  max-height: 34px !important;
+  max-width: 180px !important;
+  object-fit: contain;
+}
+
+// ── Footer wordmark ───────────────────────────────────────────────────────────
+
+.probity-footer {
+  position: fixed;
+  bottom: 14px;
+  right: 28px;
+  font-family: $mainFont;
+  font-size: 10px;
+  font-weight: 700;
+  color: $probity-navy;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  opacity: 0.65;
+  pointer-events: none;
+  z-index: 200;
+  transition: opacity 0.25s;
+
+  &.hidden {
+    opacity: 0;
+  }
+}
+
+// ── Headings ──────────────────────────────────────────────────────────────────
+
+.reveal h1,
+.reveal h2,
+.reveal h3,
+.reveal h4 {
+  text-align: left;
+  letter-spacing: -0.01em;
+}
+
+// ── Lists ─────────────────────────────────────────────────────────────────────
+
+.reveal ul,
+.reveal ol {
+  margin-left: 1.1em;
+  margin-top: 0.2em;
+
+  li {
+    margin-bottom: 0.35em;
+    color: $probity-body;
+    line-height: 1.5;
+
+    &::marker {
+      color: $probity-mid;
+    }
+  }
+}
+
+// ── Tables ────────────────────────────────────────────────────────────────────
+
+.reveal table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.82em;
+
+  thead tr {
+    background: $probity-navy;
+    color: #ffffff;
+
+    th {
+      padding: 9px 14px;
+      text-align: left;
+      font-weight: 700;
+      border: none;
+    }
+  }
+
+  tbody tr {
+    &:nth-child(odd)  { background: #ffffff; }
+    &:nth-child(even) { background: $probity-pale; }
+
+    td {
+      padding: 7px 14px;
+      border-bottom: 1px solid $probity-rule;
+      color: $probity-body;
+    }
+  }
+
+  caption {
+    caption-side: bottom;
+    font-size: 0.82em;
+    color: $probity-muted;
+    padding-top: 6px;
+    text-align: left;
+  }
+}
+
+// ── Code ──────────────────────────────────────────────────────────────────────
+
+.reveal code:not(.sourceCode) {
+  font-family: $codeFont;
+  font-size: 0.86em;
+  background: $probity-pale;
+  color: $probity-deep;
+  padding: 1px 5px;
+  border-radius: 3px;
+}
+
+.reveal pre {
+  background: $probity-off;
+  border-left: 3px solid $probity-navy;
+  border-radius: 0 4px 4px 0;
+  padding: 12px 16px;
+  font-size: 0.84em;
+  box-shadow: none;
+
+  code {
+    background: transparent;
+    padding: 0;
+    color: $probity-body;
+    font-family: $codeFont;
+  }
+}
+
+// ── Two columns ───────────────────────────────────────────────────────────────
+
+.reveal .columns {
+  display: flex;
+  gap: 2em;
+  align-items: flex-start;
+
+  .column {
+    flex: 1;
+  }
+}
+
+// ── Stat cards ────────────────────────────────────────────────────────────────
+
+.probity-statcards {
+  display: flex;
+  gap: 16px;
+  margin-top: 0.8em;
+
+  .probity-statcard {
+    flex: 1;
+    background: #ffffff;
+    border-top: 4px solid $probity-navy;
+    border-radius: 4px;
+    padding: 18px 20px 16px;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.07);
+
+    .statcard-label {
+      font-size: 0.62em;
+      font-weight: 700;
+      color: $probity-muted;
+      letter-spacing: 0.09em;
+      text-transform: uppercase;
+      margin-bottom: 5px;
+    }
+
+    .statcard-value {
+      font-size: 1.9em;
+      font-weight: 700;
+      color: $probity-navy;
+      line-height: 1.1;
+      margin-bottom: 5px;
+    }
+
+    .statcard-desc {
+      font-size: 0.7em;
+      color: $probity-muted;
+      line-height: 1.45;
+    }
+
+    &.probity-statcard--gold {
+      background: $probity-navy;
+      border-top-color: $probity-gold;
+
+      .statcard-label { color: $probity-gold; }
+      .statcard-value { color: #ffffff; }
+      .statcard-desc  { color: rgba(255, 255, 255, 0.68); }
+    }
+  }
+}
+
+// ── Three-card rows ───────────────────────────────────────────────────────────
+
+.probity-cards {
+  display: flex;
+  gap: 16px;
+  margin-top: 0.8em;
+
+  .probity-card {
+    flex: 1;
+    background: $probity-off;
+    border-left: 4px solid $probity-navy;
+    border-radius: 0 4px 4px 0;
+    padding: 18px 20px 16px;
+
+    .card-label {
+      font-size: 0.82em;
+      font-weight: 700;
+      color: $probity-navy;
+      margin-bottom: 7px;
+    }
+
+    .card-body {
+      font-size: 0.76em;
+      color: $probity-body;
+      line-height: 1.55;
+    }
+  }
+}
+
+// ── Strong lead-in pattern ────────────────────────────────────────────────────
+
+.reveal strong {
+  color: $probity-navy;
+  font-weight: 700;
+}
+
+// ── Figures ───────────────────────────────────────────────────────────────────
+
+.reveal figure {
+  margin: 0.4em 0 0;
+
+  img {
+    max-height: 420px;
+    width: auto;
+  }
+
+  figcaption,
+  .figure-caption,
+  p.caption {
+    font-size: 0.7em;
+    color: $probity-muted;
+    text-align: left;
+    margin-top: 5px;
+  }
+}

@@ -1,0 +1,30 @@
+title: Probity HTML Deck
+author: Probity Data Analytics
+version: 1.0.0
+quarto-required: ">=1.4.0"
+contributes:
+  formats:
+    revealjs:
+      theme: [default, custom.scss]
+      filters:
+        - probity.lua
+      logo: logo_navy_small.png
+      title-slide-attributes:
+        data-background-color: "#0A325A"
+      width: 1280
+      height: 720
+      margin: 0
+      slide-number: false
+      progress: false
+      history: false
+      controls: false
+      hash: true
+      transition: none
+      background-transition: none
+      center: false
+      fig-width: 9
+      fig-height: 4.2
+      fig-dpi: 150
+      code-line-numbers: false
+      highlight-style: github
+      include-after-body: footer.html

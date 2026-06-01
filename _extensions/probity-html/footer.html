@@ -1,0 +1,53 @@
+<div class="probity-footer" id="probity-footer">Probity Data Analytics</div>
+<script>
+(function () {
+  var DARK_BG = '#0A325A';
+  var footer  = document.getElementById('probity-footer');
+  var logoEl  = null;
+  var srcNavy = null;
+  var srcWhite = null;
+
+  function isDark(slide) {
+    if (!slide) return false;
+    if (slide.classList.contains('title-slide')) return true;
+    var bg = (slide.getAttribute('data-background-color') || '').toLowerCase();
+    return bg === DARK_BG.toLowerCase();
+  }
+
+  function updateChrome(slide) {
+    if (!logoEl) {
+      logoEl = document.querySelector('.slide-logo');
+      if (logoEl) {
+        srcNavy  = logoEl.src;
+        // Derive white logo path from the navy one
+        srcWhite = srcNavy.replace(/logo_navy_small\.png(\?.*)?$/, 'logo_white.png');
+      }
+    }
+
+    var dark = isDark(slide);
+
+    if (logoEl && srcNavy && srcWhite) {
+      logoEl.src = dark ? srcWhite : srcNavy;
+    }
+
+    if (footer) {
+      footer.classList.toggle('hidden', dark);
+    }
+  }
+
+  function setup() {
+    if (typeof Reveal === 'undefined') {
+      setTimeout(setup, 80);
+      return;
+    }
+    Reveal.on('ready',        function (e) { updateChrome(e.currentSlide); });
+    Reveal.on('slidechanged', function (e) { updateChrome(e.currentSlide); });
+    // Handle initial state when already ready
+    if (Reveal.isReady()) {
+      updateChrome(Reveal.getCurrentSlide());
+    }
+  }
+
+  setup();
+})();
+</script>
