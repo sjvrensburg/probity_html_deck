@@ -23,6 +23,19 @@ bash install.sh /path/to/your-project
 quarto add /path/to/probity_html_deck --no-prompt
 ```
 
+> **Decks in a subdirectory?** Quarto only discovers `_extensions/` by walking up
+> from the `.qmd` to the project root (the nearest ancestor with a `_quarto.yml`).
+> If your deck lives in a subfolder, pass that subfolder as a second argument so the
+> extension is placed next to it:
+>
+> ```bash
+> bash install.sh /path/to/your-project pipeline/docs
+> ```
+>
+> `quarto add` does **not** create a `_quarto.yml`; without one, a deck in a
+> subdirectory will fail to find the extension. See
+> [Project layout & extension discovery](#project-layout--extension-discovery).
+
 ### 2. Write
 
 Create `deck.qmd` in your project:
@@ -69,6 +82,56 @@ format:
   probity-html-revealjs:
     embed-resources: true
 ```
+
+---
+
+## Project layout & extension discovery
+
+Quarto finds the extension by walking **up** from the `.qmd` to the *project
+root* — the nearest ancestor directory that contains a `_quarto.yml` — checking
+each directory on the way for `_extensions/`. The extension must sit on that
+path, or the render fails with:
+
+```
+ERROR: Unable to read the extension 'probity-html'.
+```
+
+This works out of the box for a deck at the project root. A deck in a
+**subdirectory** resolves only when both of these hold:
+
+- A `_quarto.yml` exists at (or above) the deck — it defines the project root.
+  `install.sh` creates one; `quarto add` does **not**.
+- No *intermediate* `_quarto.yml` sits between the deck and `_extensions/`. An
+  inner `_quarto.yml` re-anchors the project root below the extension, so the
+  walk-up stops before reaching it.
+
+```
+project/
+  _quarto.yml          ← project root marker (required)
+  _extensions/
+    probity-html/
+  decks/
+    deck.qmd           ← resolves: walks up to the root and finds _extensions/
+```
+
+If you cannot guarantee that layout (no root `_quarto.yml`, or an unavoidable
+intermediate one), place the extension **next to the deck**. `install.sh` does
+this for you when you pass the deck subdirectory:
+
+```bash
+bash install.sh /path/to/project decks         # copies the extension into decks/ (portable)
+bash install.sh --link /path/to/project decks   # symlink instead (Unix only; see note)
+```
+
+The default is a **copy** — self-contained and portable, so the deck still
+renders after it is zipped, emailed, or moved to another machine, and it works on
+Windows. `--link` makes a relative symlink instead (no duplication, theme stays
+in sync), but symlinks need Administrator/Developer Mode on Windows and break when
+the folder is zipped or copied off the filesystem; the script automatically falls
+back to a copy if it cannot create a working symlink.
+
+A `_quarto.yml` in the deck's own directory does **not** help on its own — the
+extension must be co-located, not just the project marker.
 
 ---
 

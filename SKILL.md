@@ -48,6 +48,16 @@ If not installed, run from the `probity_html_deck` repo root:
 bash /path/to/probity_html_deck/install.sh /path/to/working-project
 ```
 
+If the deck will live in a **subdirectory** of the project (not beside
+`_extensions/`), pass that subdirectory so the extension is placed next to it —
+otherwise the render fails with `Unable to read the extension`:
+
+```bash
+bash /path/to/probity_html_deck/install.sh /path/to/working-project pipeline/docs
+```
+
+See **Subdirectory decks** under Common pitfalls for why.
+
 Verify after installing:
 
 ```bash
@@ -399,6 +409,7 @@ Options that **must not** be set (they override the extension and break branding
 |---|---|---|
 | `ERROR: Extension 'probity-html' not found` | Extension not installed | Run `install.sh` and verify `_extensions/probity-html/_extension.yml` exists |
 | `ERROR: Unknown format: probity-html-revealjs` | Same as above | Same fix |
+| `ERROR: Unable to read the extension 'probity-html'` (deck in a subdirectory) | Quarto walks up only to the project root; `_extensions/` is not on the path from the deck to its root — no root `_quarto.yml`, or an intermediate `_quarto.yml` re-anchors the root below `_extensions/` | Co-locate the extension with the deck: `bash install.sh <project> <deck-subdir>`. See **Subdirectory decks** below |
 | Card content empty in output | `[[marker]]` not on its own paragraph or blank line between marker and list | See **Common pitfalls — card markers** |
 | `[[statcards]]` appears as literal text in slide | Same parsing issue | Same fix |
 | Logo shows as broken image | Logo files absent from `_extensions/probity-html/` | Re-run `install.sh`; or copy `logo_navy_small.png` and `logo_white.png` manually |
@@ -494,6 +505,30 @@ true`, the rendered `deck.html` depends on `deck_files/` being in the same
 directory. Sending only the `.html` by email will produce a broken presentation.
 Always set `embed-resources: true` before distributing a deck outside the
 project directory.
+
+**Subdirectory decks — `Unable to read the extension`.** Quarto discovers
+`_extensions/` by walking **up** from the `.qmd` only as far as the project root
+(the nearest ancestor with a `_quarto.yml`), checking each directory for
+`_extensions/`. A deck at the project root always resolves. A deck in a
+subdirectory resolves only when the extension is on that upward path — which
+fails in two common cases:
+
+- **No `_quarto.yml` above the deck** (e.g. installed with `quarto add`, which
+  does not create one): the deck's own directory becomes the project root and
+  only `<deckdir>/_extensions/` is searched.
+- **An intermediate `_quarto.yml`** between the deck and `_extensions/`: it
+  re-anchors the project root below the extension, so the walk-up stops short.
+
+Fixes, simplest first:
+
+1. Keep the deck at the project root, beside `_extensions/` and `_quarto.yml`.
+2. Ensure a `_quarto.yml` exists at the project root and that no subdirectory
+   between the deck and the root has its own `_quarto.yml`.
+3. Co-locate the extension with the deck — re-run the installer with the deck
+   subdirectory: `bash install.sh <project> pipeline/docs`. (It copies by
+   default, which is portable and works on Windows; `--link` symlinks instead on
+   Unix.) Putting only a `_quarto.yml` in the deck's directory does **not** help
+   on its own — the extension itself must be co-located.
 
 ---
 
