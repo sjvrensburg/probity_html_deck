@@ -50,15 +50,15 @@ date-format: "D MMMM YYYY"
 format: probity-html-revealjs
 ---
 
-# Section one
+# Section One
 
-## Content slide
+## Content Slide
 
 - Lead with the answer, then the qualification
 - Short bullets, sentence case, no terminal full stops on fragments
 - UK spelling throughout
 
-## Headline numbers
+## Headline Numbers
 
 [[statcards]]
 
@@ -146,6 +146,10 @@ extension must be co-located, not just the project marker.
 
 **Rule:** `#` is a divider (heading only, no body text). `##` is a content
 slide. Mixing them up is the most common error.
+
+**Heading case:** all slide titles and section dividers use title case
+(`Headline Numbers`, `Loss Rates Rose 40%`), while bullets, captions, and body
+text stay sentence case.
 
 ---
 

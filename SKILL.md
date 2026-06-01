@@ -192,8 +192,8 @@ When given prose, notes, a Word document, or a brief:
 
 1. Identify the logical arguments or phases → each becomes a `#` divider.
 2. Identify the key claim in each argument → each becomes a `##` slide title.
-   Titles lead with the answer, not the topic. "Loss rates rose 40%" beats
-   "Loss rate analysis".
+   Titles lead with the answer, not the topic, and are written in title case.
+   "Loss Rates Rose 40%" beats "Loss Rate Analysis".
 3. Strip connecting prose. Slides use short bullets, not paragraphs. One
    qualifier clause per bullet is acceptable; more than that belongs in
    speaker notes.
@@ -216,7 +216,7 @@ visual hierarchy.
 ### Content slide
 
 ```markdown
-## Lead with the answer
+## Lead with the Answer
 
 - Short bullets, sentence case, no terminal full stops on fragments
 - One idea per slide
@@ -228,7 +228,7 @@ visual hierarchy.
 Use for claim/evidence or before/after pairs. Unequal widths are fine.
 
 ```markdown
-## Two columns
+## Two Columns
 
 ::: {.columns}
 ::: {.column width="50%"}
@@ -259,7 +259,7 @@ widths are integer percentages summing to 100.
 Fields: `label :: number :: description`. Two to four cards per row.
 
 ```markdown
-## Headline numbers
+## Headline Numbers
 
 [[statcards]]
 
@@ -276,7 +276,7 @@ most once per row.
 Fields: `label :: body`. Two to four cards per row.
 
 ```markdown
-## Three steps
+## Three Steps
 
 [[cards]]
 
@@ -329,7 +329,7 @@ Use `::: {.notes}` to add off-slide content visible in presenter view.
 Notes do not appear in the rendered slides themselves.
 
 ```markdown
-## A content slide
+## A Content Slide
 
 - Key point one
 - Key point two
@@ -345,7 +345,7 @@ sensitivity test is on the following slide.
 Bullets appear one at a time when the presenter advances.
 
 ```markdown
-## Three findings
+## Three Findings
 
 ::: {.incremental}
 - Finding one
@@ -365,7 +365,7 @@ format:
 ### Section divider (heading-only)
 
 ```markdown
-# Section title
+# Section Title
 ```
 
 No body text under a `#` heading. The Lua filter adds a navy background
@@ -457,6 +457,14 @@ logo plus a hairline rule is the only chrome a content slide needs.
 **`#` vs `##`.** Level-1 is a navy divider, level-2 is a white content slide.
 Mixing these up is the most common error. A `#` with body text produces a stray
 extra slide and breaks the navy layout.
+
+**Headings use title case.** Every slide title and section divider, at every
+level, is written in title case: capitalise the first and last word plus all
+principal words; keep minor words lower-case in the middle — articles (`a`,
+`an`, `the`), coordinating conjunctions (`and`, `but`, `or`), and short
+prepositions (`of`, `to`, `in`, `on`, `for`, `with`). `Loss Rates Rose 40%`,
+not `Loss rates rose 40%`. The title still leads with the answer. Bullets,
+captions, and body text stay sentence case.
 
 **Card markers must be on their own paragraph with no blank line before the
 list.** Correct:
