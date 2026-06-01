@@ -105,12 +105,23 @@ variables. Use them everywhere; do not hardcode hex values in the rules section.
 ## Installing into another project
 
 ```bash
-bash install.sh /path/to/target-project
+bash install.sh /path/to/target-project                 # deck at project root
+bash install.sh /path/to/target-project pipeline/docs   # deck in a subdirectory
 ```
 
 The script copies `_extensions/probity-html/` and `assets/` and creates
 `_quarto.yml` if absent. No post-render hooks are needed in `_quarto.yml` —
 the Lua filter handles everything at render time.
+
+**Subdirectory decks.** Quarto discovers `_extensions/` by walking up from the
+`.qmd` only as far as the project root (the nearest ancestor with a
+`_quarto.yml`). A deck in a subdirectory fails with `Unable to read the
+extension` when no `_quarto.yml` sits above it (e.g. `quarto add`, which does
+not create one) or when an intermediate `_quarto.yml` re-anchors the root below
+`_extensions/`. Passing the deck subdirectory as the second argument co-locates
+the extension with the deck (copies by default — portable and Windows-safe;
+`--link` symlinks instead on Unix). See `SKILL.md` → Common pitfalls →
+"Subdirectory decks".
 
 ## Full usage documentation
 
